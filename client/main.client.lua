@@ -1,4 +1,9 @@
 Logger.info("starting..")
+
+
+On_duty = false
+
+
 RegisterNetEvent("esx:playerLoaded", function(xPlayer)
     ESX.PlayerData = xPlayer
     ESX.PlayerLoaded = true

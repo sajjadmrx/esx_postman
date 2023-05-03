@@ -26,7 +26,7 @@ Config = {
         },
 
         VehiclesSpawner = {
-            pos    = vector3(448.7865, -1785.8784, 28.5924),
+            pos    = vector3(435.8820, -1782.6068, 28.5589),
             Size   = { x = 0.8, y = 0.5, z = 1.0 },
             Color  = { r = 50, g = 200, b = 50 },
             Marker = {
@@ -37,6 +37,7 @@ Config = {
                 enable       = true
             },
             Blip   = false,
+            Type   = 'vehiclesSpawner',
             Hint   = "press [E] to spawne vehicle",
         },
         boxes = {
@@ -57,6 +58,7 @@ Config = {
                 sprite = 478,
                 color = 38
             },
-        }
+        },
+
     }
 }

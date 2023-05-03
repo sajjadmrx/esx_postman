@@ -4,7 +4,7 @@ author 'sajjadmrx'
 version '1.0.0'
 description 'postman job'
 lua54 'yes'
-
+legacyversion '1.9.1'
 
 shared_script '@es_extended/imports.lua'
 
