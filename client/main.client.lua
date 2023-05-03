@@ -9,3 +9,9 @@ end)
 if ESX.PlayerLoaded then
     BlipManager.RefreshBlips()
 end
+
+
+RegisterNetEvent('esx:setJob', function(job)
+    BlipManager.DeleteBlips()
+    BlipManager.RefreshBlips(job)
+end)

@@ -2,5 +2,8 @@
     "Lua.diagnostics.disable": [
         "param-type-mismatch",
         "missing-parameter"
+    ],
+    "Lua.diagnostics.globals": [
+        "ESX"
     ]
 }
