@@ -12,5 +12,6 @@ AddEventHandler(EventsEnum.VehicleSpawner, function()
         if type(response) == "string" then
             ESX.ShowNotification(response, "error")
         end
+        ESX.HideUI()
     end)
 end)

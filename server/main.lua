@@ -1,5 +1,5 @@
 Logger.info("Hello World")
-
+Cache = {}
 ESX.RegisterServerCallback(ServerCallBackEvents.SpawnVehicle, function(source, cb)
     local src = source;
     local xPlayer = ESX.GetPlayerFromId(src);
@@ -20,20 +20,20 @@ ESX.RegisterServerCallback(ServerCallBackEvents.SpawnVehicle, function(source, c
             end
             breakTime = breakTime + 1;
         end
+        cb()
     end)
 end)
 
 
-
-local Actives = {}
-local key = "esx_" .. Config.jobKey .. ":on_duty_{identifier}"
-ESX.RegisterServerCallback(ServerCallBackEvents.FetchDutyJob, function(source, cb)
-    local xPlayer = ESX.GetPlayerFromId(source)
+AddEventHandler(ServerCallBackEvents.FetchDutyJob, function(src, cb)
+    local key = "esx_" .. Config.jobKey .. ":on_duty_{identifier}"
+    local xPlayer = ESX.GetPlayerFromId(src)
     if xPlayer and xPlayer.job and xPlayer.job.name == Config.jobKey then
         -- cb(Actives[xPlayer.identifier] and true or false)
         local value = GetResourceKvpString(string.gsub(key, "{identifier}", xPlayer.identifier))
         if value == nil or value ~= "true" then
             cb(false)
+
             return
         end
 
@@ -42,21 +42,43 @@ ESX.RegisterServerCallback(ServerCallBackEvents.FetchDutyJob, function(source, c
         cb(false)
     end
 end)
+ESX.RegisterServerCallback(ServerCallBackEvents.FetchDutyJob, function(source, cb)
+    local key = "esx_" .. Config.jobKey .. ":on_duty_{identifier}"
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if xPlayer and xPlayer.job and xPlayer.job.name == Config.jobKey then
+        -- cb(Actives[xPlayer.identifier] and true or false)
+        local value = GetResourceKvpString(string.gsub(key, "{identifier}", xPlayer.identifier))
+        if value == nil or value ~= "true" then
+            cb(false)
+            Cache[xPlayer.identifier] = false
+            return
+        end
+
+        cb(true)
+        Cache[xPlayer.identifier] = true
+    else
+        cb(false)
+        Cache[xPlayer.identifier] = false
+    end
+end)
 
 
 RegisterNetEvent(ServerEvents.ToggleDutyJob, function()
     local src = source
     local xPlayer = ESX.GetPlayerFromId(src)
     if xPlayer and xPlayer.job and xPlayer.job.name == Config.jobKey then
-        local key = string.gsub(key, "{identifier}", xPlayer.identifier)
+        local key = string.gsub("esx_" .. Config.jobKey .. ":on_duty_{identifier}", "{identifier}", xPlayer.identifier)
         local on_duty = GetResourceKvpString(key)
+        print(53, on_duty)
         if on_duty == nil or on_duty == "false" then
             SetResourceKvp(key, "true")
         else
             SetResourceKvp(key, "false")
+            TriggerEvent("esx_" .. JobKey .. ":DeleteCustomers", xPlayer)
         end
     end
 end)
+
 
 -- DELETE_RESOURCE_KVP
 RegisterCommand("esx:" .. Config.jobKey .. "_reset_kvp", function(source)
@@ -65,5 +87,4 @@ RegisterCommand("esx:" .. Config.jobKey .. "_reset_kvp", function(source)
         return;
     end
     DeleteResourceKvp("postman_job")
-    print("DELETED", x)
 end)

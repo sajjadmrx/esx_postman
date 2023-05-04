@@ -1,15 +1,28 @@
 Logger.info("starting..")
 
-
 On_duty = false
-IsWorking = false
-
+Customers = {}
 function fetchDutyJob()
     ESX.TriggerServerCallback(ServerCallBackEvents.FetchDutyJob, function(result)
         On_duty = result
         GetPlayerSkin()
         BlipManager.RefreshBlips()
     end)
+    ESX.TriggerServerCallback(ServerCallBackEvents.SetCustomers, function(rep)
+        SetCustomers(rep.list)
+    end)
+end
+
+function getRandomCoordsInRadius(center, radius)
+    local x0, y0, z0 = table.unpack(center)
+    local rd, t, u = math.random(), math.random(), math.random()
+    local theta = 2 * math.pi * t
+    local phi = math.acos(2 * u - 1)
+    local r = radius * math.cbrt(rd)
+    local x = x0 + r * math.sin(phi) * math.cos(theta)
+    local y = y0 + r * math.sin(phi) * math.sin(theta)
+    local z = z0 + r * math.cos(phi)
+    return vector3(x, y, z)
 end
 
 RegisterNetEvent("esx:playerLoaded", function(xPlayer)

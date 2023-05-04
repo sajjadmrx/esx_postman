@@ -7,27 +7,32 @@ local menuIsShowed, TextUIdrawing = false, false
 CreateThread(function()
     while true do
         local sleep = 1500
-        local playerCoords = GetEntityCoords(ESX.PlayerData.ped)
-        local isInMarker = false
-        if ESX.PlayerData.job
-            and ESX.PlayerData.job.name == JobKey then
+        if ESX.PlayerData.job and ESX.PlayerData.job.name == JobKey then
+            local playerCoords = GetEntityCoords(ESX.PlayerData.ped)
+            local isInMarker = false
+            local lastZone;
+            sleep = 0
+
             for k, v in pairs(Config.Zones) do
                 local distance = #(playerCoords - v.pos)
                 if v.Marker then
                     if On_duty or v.Type == "cloakroom" then
                         if distance < v.Marker.drawDistance then
-                            sleep = 0
                             MarkerManager.Draw(v.Marker.type, v.pos, v.Marker.size, v.Marker.color)
+                            lastZone = v.Type
+                        else
+                            lastZone = nil
                         end
                         if distance < (v.Marker.size.x / 2) then
                             isInMarker = true
                             TriggerEvent(EventsEnum.EnteredMarker, k)
+                        else
+                            if not isInMarker then
+                                TriggerEvent(EventsEnum.ExitedMarker, lastZone)
+                            end
                         end
                     end
                 end
-            end
-            if not isInMarker then
-                TriggerEvent(EventsEnum.ExitedMarker)
             end
         end
         Wait(sleep)
@@ -88,8 +93,10 @@ AddEventHandler(EventsEnum.EnteredMarker, function(zone)
 end)
 
 AddEventHandler(EventsEnum.ExitedMarker, function(zone)
-    CurrentAction = nil
-    HideUI()
+    if zone ~= nil then
+        CurrentAction = nil
+        HideUI()
+    end
 end)
 
 
@@ -118,6 +125,7 @@ function OpenCloakRoomMenu()
         if element.value == "off_duty" then
             On_duty = false
             GetPlayerSkin()
+            ClearCustomers()
         elseif element.value == "on_duty" then
             On_duty = true
             GetPlayerSkin()
@@ -134,32 +142,41 @@ end
 local loading = false
 function PickUpBoxesHandler()
     local time = Config.pickUpBoxesTime
-    if IsWorking then
-        ESX.ShowHelpNotification(TranslateCap("box_pickup_error"))
+    if #Customers > 0 then
+        ESX.TextUI(TranslateCap("box_pickup_error"), "error")
         return
     end
     if loading then
-        ESX.TextUI(TranslateCap("moving_boxes_to_vehicle"))
+        ESX.TextUI(TranslateCap("moving_boxes_to_vehicle"), "error")
         return;
     end
 
 
     loading = true
 
-    local vehicle = getPedVehicle()
-    if vehicle and GetIsVehicleEngineRunning(vehicle) then
-        CreateThread(function()
-            while loading do
-                Wait(1)
-                SetVehicleEngineOn(vehicle, false, true, false)
-            end
-        end)
-    end
-
-    ProgressBar(TranslateCap("moving_boxes_to_vehicle"), time, function()
-        ESX.ShowHelpNotification(TranslateCap("boxes_moved_successfully"))
-        IsWorking = true
-        loading = false
+    ESX.TriggerServerCallback(ServerCallBackEvents.SetCustomers, function(resp)
+        if resp.isOld then
+            --error
+            loading = false
+            ESX.TextUI(TranslateCap("box_pickup_error"), "error")
+            SetCustomers(resp.list)
+        else
+            --        if vehicle and GetIsVehicleEngineRunning(vehicle) then
+            CreateThread(function()
+                local vehicle = getPedVehicle()
+                while loading do -- and vehicle and VehicleEngineRunning do
+                    vehicle = getPedVehicle()
+                    SetVehicleEngineOn(vehicle, false, true, false)
+                    Wait(0)
+                end
+            end)
+            --    end
+            ProgressBar(TranslateCap("moving_boxes_to_vehicle"), time, function()
+                ESX.ShowHelpNotification(TranslateCap("boxes_moved_successfully"))
+                loading = false
+                SetCustomers(resp.list)
+            end)
+        end
     end)
 end
 
