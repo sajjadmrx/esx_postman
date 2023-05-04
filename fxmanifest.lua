@@ -23,7 +23,7 @@ server_script({
     '@es_extended/locale.lua',
     'locales/*.lua',
     'shared/**/*.lua',
-    'server/db/*.lua',
+    'server/functions/*.lua',
     'server/*.lua'
 })
 

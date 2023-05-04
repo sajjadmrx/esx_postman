@@ -5,6 +5,8 @@
     ],
     "Lua.diagnostics.globals": [
         "ESX",
-        "TranslateCap"
+        "TranslateCap",
+        "Locales",
+        "MySQL"
     ]
 }

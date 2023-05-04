@@ -98,7 +98,7 @@ function OpenCloakRoomMenu()
     local elements = {
         {
             unselectable = "true",
-            title = TranslateCap("TranslateCap"),
+            title = TranslateCap("elements_Locker_Room"),
             icon = "fas fa-person-booth"
         },
         {
@@ -117,23 +117,15 @@ function OpenCloakRoomMenu()
         HideUI()
         if element.value == "off_duty" then
             On_duty = false
-            ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin)
-                TriggerEvent('skinchanger:loadSkin', skin)
-            end)
+            GetPlayerSkin()
         elseif element.value == "on_duty" then
             On_duty = true
-
-            ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
-                if skin.sex == 0 then
-                    TriggerEvent('skinchanger:loadClothes', skin, jobSkin.skin_male)
-                else
-                    TriggerEvent('skinchanger:loadClothes', skin, jobSkin.skin_female)
-                end
-            end)
+            GetPlayerSkin()
         end
 
         BlipManager.DeleteBlips()
         BlipManager.RefreshBlips()
+        TriggerServerEvent(ServerEvents.ToggleDutyJob)
     end, function()
         HideUI()
     end)
@@ -164,11 +156,11 @@ function PickUpBoxesHandler()
         end)
     end
 
-    ProgressBar(time)
-    Wait(time)
-    ESX.ShowHelpNotification(TranslateCap("boxes_moved_successfully"))
-    IsWorking = true
-    loading = false
+    ProgressBar(TranslateCap("moving_boxes_to_vehicle"), time, function()
+        ESX.ShowHelpNotification(TranslateCap("boxes_moved_successfully"))
+        IsWorking = true
+        loading = false
+    end)
 end
 
 function HideUI()
@@ -179,8 +171,13 @@ function HideUI()
     TextUIdrawing = false
 end
 
-function ProgressBar(time)
-    ESX.ShowHelpNotification(TranslateCap("moving_boxes_to_vehicle"))
+function ProgressBar(text, time, cb)
+    ESX.Progressbar(text, time, {
+        FreezePlayer = true,
+        onFinish = function()
+            cb()
+        end
+    })
 end
 
 function getPedVehicle()

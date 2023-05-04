@@ -1,20 +1,29 @@
 Logger.info("starting..")
 
 
-On_duty = true
+On_duty = false
 IsWorking = false
-print(not On_duty)
+
+function fetchDutyJob()
+    ESX.TriggerServerCallback(ServerCallBackEvents.FetchDutyJob, function(result)
+        On_duty = result
+        GetPlayerSkin()
+        BlipManager.RefreshBlips()
+    end)
+end
 
 RegisterNetEvent("esx:playerLoaded", function(xPlayer)
     ESX.PlayerData = xPlayer
     ESX.PlayerLoaded = true
-    BlipManager.RefreshBlips()
+    fetchDutyJob()
     Logger.info("playerLoaded")
 end)
 
 if ESX.PlayerLoaded then
-    BlipManager.RefreshBlips()
+    fetchDutyJob()
 end
+
+
 
 
 RegisterNetEvent('esx:setJob', function(job)

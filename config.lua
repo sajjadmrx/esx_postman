@@ -1,6 +1,7 @@
 Config = {
     jobKey = "postman",
     pickUpBoxesTime = 3000,
+    sqlStatusDuty = "is_duty_job",
     Vehicles = {
 
     },
