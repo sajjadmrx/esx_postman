@@ -1,5 +1,6 @@
 Config = {
     jobKey = "postman",
+    pickUpBoxesTime = 3000,
     Vehicles = {
 
     },
@@ -40,6 +41,10 @@ Config = {
             Type   = 'vehiclesSpawner',
             Hint   = "press [E] to spawne vehicle",
         },
+
+        VehicleSpawnPoint = {
+            pos = vector3(442.5473, -1781.0958, 28.5609)
+        },
         boxes = {
             pos       = vector3(444.9805, -1788.5244, 28.5925),
             Size      = { x = 0.8, y = 0.5, z = 1.0 },
@@ -48,11 +53,12 @@ Config = {
                 type         = 30,
                 size         = { x = 1.1, y = 0.7, z = 1.1 },
                 color        = { r = 20, g = 200, b = 40, a = 200 },
-                drawDistance = 2.5,
+                drawDistance = 3.5,
                 enable       = true
             },
             Blip      = true,
             Name      = "Postman\'s boxes",
+            Hint      = "press [E] to pick up boxes",
             Type      = 'boxes',
             BlipInfos = {
                 sprite = 478,
