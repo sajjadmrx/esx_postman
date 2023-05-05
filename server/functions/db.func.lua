@@ -1,9 +1,18 @@
-DbRepo = {}
+---comment
+---@param src any
+---@return boolean
+function GetPlayerDuty(src)
+    local key = "esx_" .. Config.jobKey .. ":on_duty_{identifier}"
+    local xPlayer = ESX.GetPlayerFromId(src)
+    if xPlayer and xPlayer.job and xPlayer.job.name == Config.jobKey then
+        key = string.gsub(key, "{identifier}", xPlayer.identifier)
+        local value = GetResourceKvpString(key)
+        if value == nil or value ~= "true" then
+            return false
+        end
 
----@param identifier number
----@return number
-DbRepo.GetDutyJob = function(identifier)
-    local items = MySQL.query.await(
-        "SELECT " .. Config.sqlStatusDuty .. " FROM users WHERE identifier=?", { identifier })
-    return items[1].is_duty_job or 0
+        return true
+    else
+        return false
+    end
 end

@@ -125,7 +125,7 @@ function OpenCloakRoomMenu()
         if element.value == "off_duty" then
             On_duty = false
             GetPlayerSkin()
-            ClearCustomers()
+            CustomersData:clear()
         elseif element.value == "on_duty" then
             On_duty = true
             GetPlayerSkin()
@@ -142,7 +142,7 @@ end
 local loading = false
 function PickUpBoxesHandler()
     local time = Config.pickUpBoxesTime
-    if #Customers > 0 then
+    if #CustomersData:find() > 0 then
         ESX.TextUI(TranslateCap("box_pickup_error"), "error")
         return
     end
@@ -159,7 +159,8 @@ function PickUpBoxesHandler()
             --error
             loading = false
             ESX.TextUI(TranslateCap("box_pickup_error"), "error")
-            SetCustomers(resp.list)
+
+            CustomersData:set(resp.list)
         else
             --        if vehicle and GetIsVehicleEngineRunning(vehicle) then
             CreateThread(function()
@@ -174,7 +175,8 @@ function PickUpBoxesHandler()
             ProgressBar(TranslateCap("moving_boxes_to_vehicle"), time, function()
                 ESX.ShowHelpNotification(TranslateCap("boxes_moved_successfully"))
                 loading = false
-                SetCustomers(resp.list)
+
+                CustomersData:set(resp.list)
             end)
         end
     end)

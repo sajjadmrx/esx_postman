@@ -1,15 +1,21 @@
 Logger.info("starting..")
 
 On_duty = false
-Customers = {}
+
+
+---@type Customers
+CustomersData = Customers:new(nil, {})
+
 function fetchDutyJob()
     ESX.TriggerServerCallback(ServerCallBackEvents.FetchDutyJob, function(result)
         On_duty = result
         GetPlayerSkin()
         BlipManager.RefreshBlips()
     end)
-    ESX.TriggerServerCallback(ServerCallBackEvents.SetCustomers, function(rep)
-        SetCustomers(rep.list)
+    ESX.TriggerServerCallback(ServerCallBackEvents.GetCustomers, function(rep)
+        if type(rep) == "table" then
+            CustomersData:set(rep)
+        end
     end)
 end
 

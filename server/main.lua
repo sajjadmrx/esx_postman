@@ -1,5 +1,4 @@
 Logger.info("Hello World")
-Cache = {}
 ESX.RegisterServerCallback(ServerCallBackEvents.SpawnVehicle, function(source, cb)
     local src = source;
     local xPlayer = ESX.GetPlayerFromId(src);
@@ -43,23 +42,7 @@ AddEventHandler(ServerCallBackEvents.FetchDutyJob, function(src, cb)
     end
 end)
 ESX.RegisterServerCallback(ServerCallBackEvents.FetchDutyJob, function(source, cb)
-    local key = "esx_" .. Config.jobKey .. ":on_duty_{identifier}"
-    local xPlayer = ESX.GetPlayerFromId(source)
-    if xPlayer and xPlayer.job and xPlayer.job.name == Config.jobKey then
-        -- cb(Actives[xPlayer.identifier] and true or false)
-        local value = GetResourceKvpString(string.gsub(key, "{identifier}", xPlayer.identifier))
-        if value == nil or value ~= "true" then
-            cb(false)
-            Cache[xPlayer.identifier] = false
-            return
-        end
-
-        cb(true)
-        Cache[xPlayer.identifier] = true
-    else
-        cb(false)
-        Cache[xPlayer.identifier] = false
-    end
+    cb(GetPlayerDuty(source))
 end)
 
 
@@ -69,7 +52,6 @@ RegisterNetEvent(ServerEvents.ToggleDutyJob, function()
     if xPlayer and xPlayer.job and xPlayer.job.name == Config.jobKey then
         local key = string.gsub("esx_" .. Config.jobKey .. ":on_duty_{identifier}", "{identifier}", xPlayer.identifier)
         local on_duty = GetResourceKvpString(key)
-        print(53, on_duty)
         if on_duty == nil or on_duty == "false" then
             SetResourceKvp(key, "true")
         else
