@@ -6,5 +6,7 @@ Locales["en"] = {
     elements_citizen_wear = "Citizen wear | off duty",
     box_pickup_error = "You have already picked up the boxes! Please proceed to the destinations.",
     moving_boxes_to_vehicle = "Moving boxes to the vehicle...",
-    boxes_moved_successfully = "Boxes have been moved successfully!"
+    boxes_moved_successfully = "Boxes have been moved successfully!",
+    done_customer = "done, current customers: %s",
+    done = "Successfully completed"
 }

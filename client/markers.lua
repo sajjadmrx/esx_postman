@@ -3,10 +3,10 @@ local menuIsShowed, TextUIdrawing = false, false
 
 
 
-
+local isCleared = false
 CreateThread(function()
     while true do
-        local sleep = 2000
+        local sleep = 13000
         if ESX.PlayerData.job and ESX.PlayerData.job.name == JobKey then
             local playerCoords = GetEntityCoords(ESX.PlayerData.ped)
             local isInMarker = false
@@ -18,8 +18,11 @@ CreateThread(function()
                 if v.Marker then
                     if On_duty or v.Type == "cloakroom" then
                         if distance < v.Marker.drawDistance then
-                            sleep = 5
-                            RemovePeskyVehicles()
+                            sleep = 2
+                            if Config.RemoveNPCVehicle and not isCleared then
+                                RemovePeskyVehicles()
+                                isCleared = true
+                            end
                             MarkerManager.Draw(v.Marker.type, v.pos, v.Marker.size, v.Marker.color)
                             lastZone = v.Type
                         else
@@ -29,11 +32,13 @@ CreateThread(function()
                             isInMarker = true
                             TriggerEvent(EventsEnum.EnteredMarker, k)
                         else
-                            if not isInMarker then
+                            if not isInMarker and isCleared then
                                 TriggerEvent(EventsEnum.ExitedMarker, lastZone)
                             end
                         end
                     end
+                else
+                    isCleared = false
                 end
             end
         end
@@ -132,6 +137,8 @@ function OpenCloakRoomMenu()
             On_duty = true
             GetPlayerSkin()
         end
+
+        TriggerEvent("esx_postman:updatedDuty")
 
         BlipManager.DeleteBlips()
         BlipManager.RefreshBlips()

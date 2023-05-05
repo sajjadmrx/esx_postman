@@ -11,7 +11,9 @@ function fetchDutyJob()
         On_duty = result
         GetPlayerSkin()
         BlipManager.RefreshBlips()
+        TriggerEvent("esx_postman:updatedDuty")
     end)
+
     ESX.TriggerServerCallback(ServerCallBackEvents.GetCustomers, function(rep)
         if type(rep) == "table" then
             CustomersData:set(rep)
