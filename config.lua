@@ -1,10 +1,10 @@
 Config = {
     jobKey           = "postman",
-    pickUpBoxesTime  = 3000,
-    CustomerLength   = 1,
+    progressbarTime  = 3000,
+    CustomerLength   = 5,
     Money            = 5000,
     Vehicle          = "rumpo2",
-    RemoveNPCVehicle = true,
+    RemoveNPCVehicle = false,
     Zones            = {
         CloakRoom = {
             pos       = vector3(78.9859, 111.8879, 81.1682),
@@ -35,7 +35,7 @@ Config = {
                 type         = 36,
                 size         = { x = 1.1, y = 0.7, z = 1.1 },
                 color        = { r = 20, g = 200, b = 40, a = 200 },
-                drawDistance = 2.5,
+                drawDistance = 4.2,
                 enable       = true
             },
             Blip   = false,
@@ -44,7 +44,7 @@ Config = {
         },
 
         VehicleSpawnPoint = {
-            pos = vector3(62.9891, 123.1993, 79.1734)
+            pos = vector3(117.0902, 99.0348, 80.9351)
         },
         boxes = {
             pos       = vector3(67.5115, 123.5949, 79.1562),
@@ -94,6 +94,7 @@ Config = {
         vector3(-646.7757, -982.2061, 20.9017),
         vector3(-833.5129, -184.6283, 37.4877),
         vector3(-929.7761, -16.2995, 42.9129),
+        vector3(-1667.8583, -541.1321, 35.0708),
         --------------RANDOM----------------
         vector3(293.5, -590.2, 42.7),
         vector3(253.4, -375.9, 44.1),

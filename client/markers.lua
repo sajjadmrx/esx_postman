@@ -32,7 +32,7 @@ CreateThread(function()
                             isInMarker = true
                             TriggerEvent(EventsEnum.EnteredMarker, k)
                         else
-                            if not isInMarker and isCleared then
+                            if not isInMarker and (isCleared or not Config.RemoveNPCVehicle) then
                                 TriggerEvent(EventsEnum.ExitedMarker, lastZone)
                             end
                         end
@@ -150,7 +150,7 @@ end
 
 local loading = false
 function PickUpBoxesHandler()
-    local time = Config.pickUpBoxesTime
+    local time = Config.progressbarTime
     if #CustomersData:find() > 0 then
         ESX.TextUI(TranslateCap("box_pickup_error"), "error")
         return
