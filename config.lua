@@ -1,14 +1,12 @@
 Config = {
     jobKey          = "postman",
     pickUpBoxesTime = 3000,
-    CustomerLength  = 1,
+    CustomerLength  = 5,
     Money           = 5000,
-    Vehicles        = {
-
-    },
+    Vehicle         = "rumpo2",
     Zones           = {
         CloakRoom = {
-            pos       = vector3(450.1437, -1782.3292, 28.5925),
+            pos       = vector3(78.9859, 111.8879, 81.1682),
             Size      = { x = 0.8, y = 0.5, z = 1.0 },
             Color     = { r = 50, g = 200, b = 50 },
             Marker    = {
@@ -29,7 +27,7 @@ Config = {
         },
 
         VehiclesSpawner = {
-            pos    = vector3(435.8820, -1782.6068, 28.5589),
+            pos    = vector3(53.4853, 114.6463, 79.1973),
             Size   = { x = 0.8, y = 0.5, z = 1.0 },
             Color  = { r = 50, g = 200, b = 50 },
             Marker = {
@@ -45,17 +43,17 @@ Config = {
         },
 
         VehicleSpawnPoint = {
-            pos = vector3(442.5473, -1781.0958, 28.5609)
+            pos = vector3(62.9891, 123.1993, 79.1734)
         },
         boxes = {
-            pos       = vector3(444.9805, -1788.5244, 28.5925),
+            pos       = vector3(67.5115, 123.5949, 79.1562),
             Size      = { x = 0.8, y = 0.5, z = 1.0 },
             Color     = { r = 50, g = 200, b = 50 },
             Marker    = {
                 type         = 30,
                 size         = { x = 1.1, y = 0.7, z = 1.1 },
                 color        = { r = 20, g = 200, b = 40, a = 200 },
-                drawDistance = 3.5,
+                drawDistance = 5.5,
                 enable       = true
             },
             Blip      = true,
@@ -163,6 +161,47 @@ Config = {
         vector3(-1645.5, 144.6, 61.7),
         vector3(-1160.6, 744.4, 154.6),
         vector3(-798.1, 831.7, 204.4)
-    }
+    },
+
+    Uniforms        = {
+        male = {
+            ['tshirt_1'] = 57,
+            ['tshirt_2'] = 0,
+            ['torso_1'] = 13,
+            ['torso_2'] = 0,
+            ['decals_1'] = 0,
+            ['decals_2'] = 0,
+            ['arms'] = 11,
+            ['pants_1'] = 10,
+            ['pants_2'] = 2,
+            ['shoes_1'] = 54,
+            ['shoes_2'] = 0,
+            ['helmet_1'] = -1,
+            ['helmet_2'] = 0,
+            ['chain_1'] = 12,
+            ['chain_2'] = 2,
+            ['ears_1'] = -1,
+            ['ears_2'] = 0
+        },
+        female = {
+            ['tshirt_1'] = 34,
+            ['tshirt_2'] = 0,
+            ['torso_1'] = 9,
+            ['torso_2'] = 0,
+            ['decals_1'] = 0,
+            ['decals_2'] = 0,
+            ['arms'] = 9,
+            ['pants_1'] = 6,
+            ['pants_2'] = 2,
+            ['shoes_1'] = 52,
+            ['shoes_2'] = 0,
+            ['helmet_1'] = -1,
+            ['helmet_2'] = 0,
+            ['chain_1'] = 0,
+            ['chain_2'] = 2,
+            ['ears_1'] = -1,
+            ['ears_2'] = 0
+        }
+    },
 
 }

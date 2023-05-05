@@ -6,18 +6,20 @@ local menuIsShowed, TextUIdrawing = false, false
 
 CreateThread(function()
     while true do
-        local sleep = 1500
+        local sleep = 2000
         if ESX.PlayerData.job and ESX.PlayerData.job.name == JobKey then
             local playerCoords = GetEntityCoords(ESX.PlayerData.ped)
             local isInMarker = false
             local lastZone;
-            sleep = 0
 
+            sleep = 1500
             for k, v in pairs(Config.Zones) do
                 local distance = #(playerCoords - v.pos)
                 if v.Marker then
                     if On_duty or v.Type == "cloakroom" then
                         if distance < v.Marker.drawDistance then
+                            sleep = 5
+                            RemovePeskyVehicles()
                             MarkerManager.Draw(v.Marker.type, v.pos, v.Marker.size, v.Marker.color)
                             lastZone = v.Type
                         else

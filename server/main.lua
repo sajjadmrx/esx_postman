@@ -1,4 +1,3 @@
-Logger.info("Hello World")
 ESX.RegisterServerCallback(ServerCallBackEvents.SpawnVehicle, function(source, cb)
     local src = source;
     local xPlayer = ESX.GetPlayerFromId(src);
@@ -8,7 +7,7 @@ ESX.RegisterServerCallback(ServerCallBackEvents.SpawnVehicle, function(source, c
         return
     end
 
-    ESX.OneSync.SpawnVehicle("rumpo2", spawnPoint, 500.0, {}, function(netId)
+    ESX.OneSync.SpawnVehicle(Config.Vehicle, spawnPoint, 500.0, {}, function(netId)
         local vNet = NetworkGetEntityFromNetworkId(netId)
         local breakTime = 0;
         while DoesEntityExist(vNet) and GetPedInVehicleSeat(vNet, -1) ~= GetPlayerPed(src) do

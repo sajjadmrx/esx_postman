@@ -46,7 +46,6 @@ ESX.RegisterServerCallback(ServerCallBackEvents.GetCustomers, function(source, c
 end)
 
 ESX.RegisterServerCallback(ServerCallBackEvents.UpadateCustomers, function(source, cb, customer)
-    -- print(type(customer), cb[1])
     local src = source
     local xPlayer = ESX.GetPlayerFromId(src)
     local key = string
