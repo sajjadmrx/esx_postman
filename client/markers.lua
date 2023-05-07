@@ -28,7 +28,7 @@ CreateThread(function()
                         else
                             lastZone = nil
                         end
-                        if distance < (v.Marker.size.x / 2) then
+                        if distance < (v.Marker.inMarker / 2) then
                             isInMarker = true
                             TriggerEvent(EventsEnum.EnteredMarker, k)
                         else
@@ -70,6 +70,8 @@ CreateThread(function()
                         TriggerEvent(EventsEnum.VehicleSpawner)
                     elseif CurrentAction == Actions.PickUpBoxes then
                         PickUpBoxesHandler()
+                    elseif CurrentAction == Actions.VehicleDeleter then
+                        DeleteVehicleHandler()
                     end
                 end
             end
@@ -96,6 +98,14 @@ AddEventHandler(EventsEnum.EnteredMarker, function(zone)
             CurrentAction = Actions.PickUpBoxes
             CurrentActionMsg = Config.Zones.boxes.Hint
         end
+    elseif zone == "VehicleDeleter"
+    then
+        local playerPed = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(playerPed, false)
+        if IsPedInVehicle(playerPed, vehicle, true) then
+            CurrentAction = Actions.VehicleDeleter
+            CurrentActionMsg = Config.Zones.VehicleDeleter.Hint
+        end
     end
 end)
 
@@ -105,6 +115,8 @@ AddEventHandler(EventsEnum.ExitedMarker, function(zone)
         HideUI()
     end
 end)
+
+
 
 
 function OpenCloakRoomMenu()
@@ -215,5 +227,16 @@ function getPedVehicle()
         return vehicle
     else
         return nil
+    end
+end
+
+function DeleteVehicleHandler()
+    local playerPed = ESX.PlayerData.ped
+    local vehicle = GetVehiclePedIsIn(playerPed, false);
+    local vehModel = GetEntityModel(vehicle)
+    if vehModel ~= joaat(Config.Vehicle) then
+        ESX.TextUI(TranslateCap("invalid_vehicle"), "error")
+    else
+        ESX.Game.DeleteVehicle(vehicle)
     end
 end

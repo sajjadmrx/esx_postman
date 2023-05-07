@@ -13,6 +13,7 @@ Config = {
             Marker    = {
                 type         = 20,
                 size         = { x = 1.1, y = 2.7, z = 1.1 },
+                inMarker     = 1.1,
                 color        = { r = 50, g = 200, b = 50, a = 200 },
                 drawDistance = 2.5,
                 enable       = true
@@ -34,6 +35,7 @@ Config = {
             Marker = {
                 type         = 36,
                 size         = { x = 1.1, y = 0.7, z = 1.1 },
+                inMarker     = 1.1,
                 color        = { r = 20, g = 200, b = 40, a = 200 },
                 drawDistance = 4.2,
                 enable       = true
@@ -42,9 +44,25 @@ Config = {
             Type   = 'vehiclesSpawner',
             Hint   = "press [E] to spawne vehicle",
         },
+        VehicleDeleter = {
+            pos    = vector3(114.1041, 100.3678, 80.8155),
+            Size   = { x = 0.8, y = 0.5, z = 1.0 },
+            Color  = { r = 50, g = 200, b = 50 },
+            Marker = {
+                type         = 24,
+                size         = { x = 1.1, y = 0.7, z = 1.1 },
+                inMarker     = 5.1,
+                color        = { r = 20, g = 200, b = 40, a = 200 },
+                drawDistance = 4.2,
+                enable       = true
+            },
+            Blip   = false,
+            Type   = 'vehicleDeleter',
+            Hint   = "press [E] to delete vehicle",
+        },
 
         VehicleSpawnPoint = {
-            pos = vector3(117.0902, 99.0348, 80.9351)
+            pos = vector3(67.2940, 118.7057, 79.1074)
         },
         boxes = {
             pos       = vector3(67.5115, 123.5949, 79.1562),
@@ -53,6 +71,7 @@ Config = {
             Marker    = {
                 type         = 30,
                 size         = { x = 1.1, y = 0.7, z = 1.1 },
+                inMarker     = 5.1,
                 color        = { r = 20, g = 200, b = 40, a = 200 },
                 drawDistance = 5.5,
                 enable       = true

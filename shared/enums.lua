@@ -4,7 +4,7 @@ ServerCallBackEvents = {
     SpawnVehicle = "esx_" .. JobKey .. ":SpawnVehicle",
     FetchDutyJob = "esx_" .. JobKey .. ":FetchDutyJob",
     SetCustomers = "esx_" .. JobKey .. ":SetCustomers",
-    GetCustomers = "esx_" .. JobKey .. ":GetCustomers", 
+    GetCustomers = "esx_" .. JobKey .. ":GetCustomers",
     UpadateCustomers = "esx_" .. JobKey .. ":UpadateCustomers",
 }
 ServerEvents         = {
